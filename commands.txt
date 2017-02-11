@@ -16,3 +16,6 @@
  2032  cd react-app/
  2044  npm start
  2045  history
+
+ //JSX className=""
+ //All React Component should start with Capital latter
