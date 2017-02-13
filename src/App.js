@@ -1,27 +1,21 @@
 import React from 'react';
 
 class App extends React.Component {
-  constructor(){
-    super();
-    this.state = {
-      txt: "Hello World"
-    }
-  }
-  update (e){
-    this.setState({
-      txt : e.target.value
-    })
-  }
   render (){
     return (
-      <div>
-        <Widget update={this.update.bind(this)} />
-        <h3>{this.state.txt}</h3>
-      </div>
+      <Button>I <Heart/> React</Button>
     )
   }
 }
 
-const Widget = (props) => <input type="text" onChange={props.update} />
+class Heart extends React.Component {
+  render (){
+    return (
+      <span>&hearts;</span>
+    )
+  }
+}
+
+const Button = (props) => <button>{props.children}</button>
 
 export default App
