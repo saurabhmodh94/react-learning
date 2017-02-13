@@ -1,31 +1,29 @@
 import React from 'react';
 
 class App extends React.Component {
-  render (){
+  constructor(){
+    super();
+    this.state = {
+      event : "--"
+    }
+  }
+  update(e){
+    this.setState({
+        event: e.type
+    })
+  }
+  render(){
     return (
-      <Button text="Text Message">I <Heart/> React</Button>
+      <div>
+        <textarea onFocus={this.update.bind(this)}
+        onClick={this.update.bind(this)}
+        onCut={this.update.bind(this)}>
+        Click
+        </textarea>
+        <h1>{this.state.event}</h1>
+      </div>
     )
   }
 }
 
-class Heart extends React.Component {
-  render (){
-    return (
-      <span>&hearts;</span>
-    )
-  }
-}
-
-const Button = (props) => <button>{props.children}</button>
-
-Button.propTypes = {
-  text(props, propName, component){
-    if(!(propName in props)){
-      return new Error(`${propName} missing`);
-    }
-    if(props[propName].length < 6){
-      return new Error(`${propName} too short`);
-    }
-  }
-}
 export default App
