@@ -2,54 +2,59 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class App extends React.Component {
-  constructor (){
+  constructor(){
     super();
     this.state = {
-      a: "",
-      b: "",
-      c: "",
-      d: ""
+      val : 0
     }
+    this.update = this.update.bind(this)
+
   }
   update(e){
     this.setState({
-      a : this.a.value,
-      b : this.refs.b.value,
-      c : ReactDOM.findDOMNode(this.c).value,
-      d : this.d.refs.compo.value,
+      val : this.state.val + 1
     })
   }
+  componentWillMount() {
+    console.log("componentWillMount");
+  }
+  componentDidMount() {
+    console.log("componentDidMount");
+  }
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
+  }
   render(){
+    console.log("render");
     return (
       <div>
-        <input type="text" ref={node => this.a = node} onChange={this.update.bind(this)}></input>{this.state.a}
-        <hr />
-        <input type="text" ref="b" onChange={this.update.bind(this)}></input>{this.state.b}
-        <hr />
-        {
-          //comment
-        }
-        <Input upd={this.update.bind(this)} ref={ component => this.c = component} />{this.state.c}
-        <hr />
-        <InputDiv upd1={this.update.bind(this)} ref={ component => this.d = component} />{this.state.d}
+        <button onClick={this.update}>Click Me</button>< hr/>
+        {this.state.val}
       </div>
     )
   }
 }
 
-class Input extends React.Component {
+
+class Wrapper extends React.Component {
+  mount(e){
+    ReactDOM.render(
+      <App />,
+      document.getElementById("a")
+    )
+  }
+  unmount(e){
+    ReactDOM.unmountComponentAtNode(document.getElementById("a"))
+  }
   render () {
-    return <input type="text" onChange={this.props.upd}></input>
+    return (
+      <div>
+      <button onClick={this.mount.bind(this)}> Mount </button>
+      <button onClick={this.unmount.bind(this)}> Unmount </button>
+      <div id="a"></div>
+      </div>
+    )
   }
 }
 
-class InputDiv extends React.Component {
-  render () {
-    return <div>
-      <input type="text" ref="compo" onChange={this.props.upd1}></input>
-    </div>
-
-  }
-}
-
-export default App
+export default Wrapper
