@@ -5,41 +5,21 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      increasing : false
+      items:[]
     }
   }
-  update(e){
-    ReactDOM.render(
-      <App val={this.props.val + 1} />,
-      document.getElementById('root')
-    )
-  }
-  componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps");
-    this.setState({increasing: nextProps.val > this.props.val})
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log("shouldComponentUpdate");
-    return nextProps.val % 5 === 0
-  }
-  componentWillUpdate(nextProps, nextState) {
-    console.log("componentWillUpdate");
-  }
-  componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate", `prev: ${prevProps.val} new: ${this.props.val}`);
+  componentWillMount() {
+    fetch('http://swapi.co/api/people/?format=json')
+    .then( response => response.json())
+    .then(({results: items}) => {this.setState({items})}) //did not understand
   }
   render(){
-    console.log("render");
+    let items = this.state.items;
     return (
-      <div>
-        <button onClick={this.update.bind(this)}>{this.props.val}</button>
-      </div>
+      <div>{items.map(item => <Name key={item.name} passdata={item}/>)}</div> //each chile should have unique key
     )
   }
 }
-
-App.defaultProps = {
-  val: 0
-}
+const Name = (props) => <p>{props.passdata.name}</p>
 
 export default App
