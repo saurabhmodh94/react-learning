@@ -5,8 +5,12 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      items:[]
+      items:[],
+      query: null
     }
+  }
+  filter(e){
+    this.setState({query: e.target.value})
   }
   componentWillMount() {
     fetch('http://swapi.co/api/people/?format=json')
@@ -15,8 +19,17 @@ class App extends React.Component {
   }
   render(){
     let items = this.state.items;
+    if(this.state.query){
+      items = items.filter(item => 
+        item.name.toLowerCase().includes(this.state.query.toLowerCase())
+      )
+    }
     return (
-      <div>{items.map(item => <Name key={item.name} passdata={item}/>)}</div> //each chile should have unique key
+      // <div>{items.map((item,i) => <p key={i}>{item.name}</p>)}</div>
+      <div>
+        <input onChange={this.filter.bind(this)} type="text"/>
+        {items.map(item => <Name key={item.name} passdata={item}/>)}
+      </div> //each child should have unique key
     )
   }
 }
