@@ -1,64 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './App.css';
 
-
-const HOC = (InnerComponent)  => class extends React.Component{
+class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      count : 0
+      input:'/*Write your code.*/',
+      output: '',
+      error: ''
     }
   }
 
-  update(){
-    this.setState({count: this.state.count + 1})
+  update(event){
+    let code =event.target.value;
+    try {
+      this.setState({
+        output: window.Babel.transform(code, { presets: ['es2015','react']}).code,
+        error: ''
+      })
+    } catch (err) {
+      this.setState({
+        error:err.message
+      })
+    }
   }
 
-  render () {
-    return (
-      <div>
-        <InnerComponent
-          {...this.props}
-          {...this.state}
-          update ={this.update.bind(this)}
-          />
-      </div>
-    )
-  }
-}
-
-
-class App extends React.Component {
   render () {
     return(
       <div>
-        <Button>Hello</Button>
-        <hr/>
-        <LabelHOC>World</LabelHOC>
+        <p>
+          {this.state.error}
+        </p>
+        <textarea
+          onChange={this.update.bind(this)}
+          defaultValue={this.state.input}>
+        </textarea>
+        <pre>
+          {this.state.output}
+        </pre>
       </div>
     )
-
   }
 }
-
-const Button = HOC((props) =>
-<button onClick={props.update}>
-  {props.children} - {props.count}
-</button>
-)
-
-const Label = React.createClass({
-  render () {
-    return (
-      <div>
-        <label onMouseOver={this.props.update}>
-          {this.props.children} - {this.props.count}
-        </label>
-      </div>
-    )
-  }
-})
-
-const LabelHOC = HOC(Label)
 
 export default App
