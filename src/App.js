@@ -1,38 +1,64 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class App extends React.Component {
+
+const HOC = (InnerComponent)  => class extends React.Component{
   constructor(){
     super();
     this.state = {
-      items:[],
-      query: null
+      count : 0
     }
   }
-  filter(e){
-    this.setState({query: e.target.value})
+
+  update(){
+    this.setState({count: this.state.count + 1})
   }
-  componentWillMount() {
-    fetch('http://swapi.co/api/people/?format=json')
-    .then( response => response.json())
-    .then(({results: items}) => {this.setState({items})}) //did not understand
-  }
-  render(){
-    let items = this.state.items;
-    if(this.state.query){
-      items = items.filter(item => 
-        item.name.toLowerCase().includes(this.state.query.toLowerCase())
-      )
-    }
+
+  render () {
     return (
-      // <div>{items.map((item,i) => <p key={i}>{item.name}</p>)}</div>
       <div>
-        <input onChange={this.filter.bind(this)} type="text"/>
-        {items.map(item => <Name key={item.name} passdata={item}/>)}
-      </div> //each child should have unique key
+        <InnerComponent
+          {...this.props}
+          {...this.state}
+          update ={this.update.bind(this)}
+          />
+      </div>
     )
   }
 }
-const Name = (props) => <p>{props.passdata.name}</p>
+
+
+class App extends React.Component {
+  render () {
+    return(
+      <div>
+        <Button>Hello</Button>
+        <hr/>
+        <LabelHOC>World</LabelHOC>
+      </div>
+    )
+
+  }
+}
+
+const Button = HOC((props) =>
+<button onClick={props.update}>
+  {props.children} - {props.count}
+</button>
+)
+
+const Label = React.createClass({
+  render () {
+    return (
+      <div>
+        <label onMouseOver={this.props.update}>
+          {this.props.children} - {this.props.count}
+        </label>
+      </div>
+    )
+  }
+})
+
+const LabelHOC = HOC(Label)
 
 export default App

@@ -42,4 +42,6 @@
 
 #14-egghead-react-fundamentals-dynamically-generated-components
 
-
+higher-order-components:
+	share common functionality between multiple components
+	take in a component and return new component
