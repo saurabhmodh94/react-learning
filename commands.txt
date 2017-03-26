@@ -52,3 +52,7 @@ jsx-deep-dive:
 reactchildren-utilities:
 	React.Children. map / toArray / forEach
 reactcloneelement:
+
+#20-egghead-react-fundamentals-composable-components //slider
+
+React Developer Tools:
