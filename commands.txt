@@ -17,5 +17,29 @@
  2044  npm start
  2045  history
 
- //JSX className=""
+ //JSX className="", because class is a reserve keyword
  //All React Component should start with Capital latter
+ component:
+ 	class compont(can have states) and stateless function component(can not have states)
+ render:
+ 	return should be wrapped into single div 
+ props (static values):
+ 	propTypes (isRequired)
+ 	defaultProps
+ state (meant to be updated):
+ 	bind
+ owner-ownee-relationship
+ child-properties
+ custom-proptype-validation
+ react-synthetic-event-system
+ refs
+ 
+ http://busypeoples.github.io/post/react-component-lifecycle/
+ component-lifecycle-mounting-basics
+ 	componentWillMount, componentDidMount, componentWillUnmount
+ component-lifecycle-updating
+ 	componentWillReceiveProps, shouldComponentUpdate, componentDidUpdate
+
+#14-egghead-react-fundamentals-dynamically-generated-components
+
+
