@@ -51,3 +51,4 @@ jsx-deep-dive:
 	React.createElement(elem, props, children...);
 reactchildren-utilities:
 	React.Children. map / toArray / forEach
+reactcloneelement:

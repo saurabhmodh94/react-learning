@@ -5,26 +5,38 @@ import './App.css';
 class App extends React.Component {
   render () {
     return(
-      <Parent>
-        <div className="classA">
-        </div>
-        <div className="classB">
-        </div>
-      </Parent>
+      <Button>
+        <button value="A">A</button>
+        <button value="B">B</button>
+        <button value="C">C</button>
+      </Button>
     )
   }
 }
 
-const Parent = React.createClass({
-  render () {
-    // let items = this.props.children.map(child => child) //throws an error for single child
-    // let items = React.Children.map(this.props.children, child => child) //solution 1
-    // let items = React.Children.toArray(this.props.children) //solution 2
-    let items = React.Children.forEach(this.props.children, child => console.log(child.props.className)) //solution 3
-    // console.log(items);
-    return null
+class Button extends React.Component {
+  constructor(){
+    super();
+    this.state = {selected: 'None'}
   }
-})
+  selectItem(selected){
+    this.setState({selected}) // syntax !!!
+  }
+  render () {
+    let fn = child => React.cloneElement(child, {
+      onClick: this.selectItem.bind(this, child.props.value)
+    })
+    let items = React.Children.map(this.props.children, fn)
+    return (
+      <div>
+        <h2>
+          You have Selected: {this.state.selected}
+        </h2>
+        {items}
+      </div>
+    )
+  }
+}
 
 
 export default App
