@@ -47,3 +47,7 @@ higher-order-components:
 	take in a component and return new component
 build-a-jsx-live-compiler:
 	babel
+jsx-deep-dive:
+	React.createElement(elem, props, children...);
+reactchildren-utilities:
+	React.Children. map / toArray / forEach
